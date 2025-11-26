@@ -1,7 +1,7 @@
 import csv
 import os
 
-folder = os.path.dirname(os.path.abspath(__file__))  # folder where this script lives
+folder = os.path.dirname(os.path.abspath(__file__))  # folder of the script
 source_file = os.path.join(folder, "Netflix.csv")
 target_file = os.path.join(folder, "contents.csv")
 default_value = 'netflix'
@@ -25,9 +25,11 @@ if len(data) > 0:
         writer = csv.writer(target)
         writer.writerows(data)
 
-    # Step 5: Clear the source file safely
-    with open(source_file, "w", newline='', encoding='utf-8') as source:
-        source.truncate(0)  # ensures file is emptied
+    # Step 5: Delete the source file completely
+    os.remove(source_file)
+    # Recreate empty source file
+    with open(source_file, "w", newline='', encoding='utf-8') as f:
+        pass
 
     print(f"Data appended successfully to {target_file} and {source_file} cleared.")
 
