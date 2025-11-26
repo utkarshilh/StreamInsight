@@ -1,0 +1,38 @@
+name: Append Netflix Shows
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'  # runs at the top of every hour
+
+jobs:
+  append_netflix_shows:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: python -m pip install --upgrade pip
+
+      - name: Run append_csv.py
+        run: python append_csv.py
+
+      - name: Commit updated contents.csv
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git add contents.csv
+          git commit -m "Updated contents.csv via GitHub Action" || echo "No changes to commit"
+          git push origin main
+
+
