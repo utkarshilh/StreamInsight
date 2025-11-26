@@ -34,7 +34,7 @@ jobs:
 
       # Step 5: Commit updated contents.csv
       - name: Commit updated contents.csv
-        working-directory: netflix
+        working-directory: Netflix
         run: |
           git config --local user.name "github-actions"
           git config --local user.email "github-actions@github.com"
