@@ -1,8 +1,9 @@
 import csv
 import os
 
-source_file = "Netflix.csv"
-target_file = "contents.csv"
+folder = os.path.dirname(os.path.abspath(__file__))  # folder where this script lives
+source_file = os.path.join(folder, "Netflix.csv")
+target_file = os.path.join(folder, "contents.csv")
 default_value = 'netflix'
 
 # Step 1: Read data from source
@@ -15,8 +16,7 @@ else:
 
 # Step 2: Check if data exists
 if len(data) > 0:
-
-    # Step 3: Add default column to each row
+    # Step 3: Add default column
     for row in data:
         row.append(default_value)
 
@@ -27,7 +27,7 @@ if len(data) > 0:
 
     # Step 5: Clear the source file safely
     with open(source_file, "w", newline='', encoding='utf-8') as source:
-        source.truncate(0)  # makes sure file is completely emptied
+        source.truncate(0)  # ensures file is emptied
 
     print(f"Data appended successfully to {target_file} and {source_file} cleared.")
 
