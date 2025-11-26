@@ -13,21 +13,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout repo (disable default credentials)
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
+      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: python -m pip install --upgrade pip
 
+      # Step 4: Run Python script inside Netflix folder
       - name: Run load_content.py
         working-directory: Netflix
         run: python load_content.py
 
+      # Step 5: Commit and push updated CSV using GITHUB_TOKEN
       - name: Commit updated contents.csv
         working-directory: Netflix
         run: |
