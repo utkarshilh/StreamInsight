@@ -25,11 +25,8 @@ if len(data) > 0:
         writer = csv.writer(target)
         writer.writerows(data)
 
-    # Step 5: Delete the source file completely
-    os.remove(source_file)
-    # Recreate empty source file
     with open(source_file, "w", newline='', encoding='utf-8') as f:
-        pass
+        f.write("")
 
     print(f"Data appended successfully to {target_file} and {source_file} cleared.")
 
