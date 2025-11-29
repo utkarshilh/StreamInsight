@@ -1,0 +1,41 @@
+name: Append All Contents
+
+on:
+  workflow_dispatch:    # Manual trigger
+  schedule:
+    - cron: '0 * * * *'  # Runs hourly at minute 0
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      # Step 3: Run load_content.py to move data into Netflix/contents.csv
+      - name: Run load_content script
+        working-directory: Netflix
+        run: python load_content.py
+
+      # Step 4: Run combine_data.py to append into combined_content.csv
+      - name: Run combine_data script
+        working-directory: .
+        run: python combine_data.py
+
+      # Step 5: Commit & push all updated files
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "github-actions"
+          git config --local user.email "github-actions@github.com"
+          git add -A
+          git commit -m "Updated CSV files via GitHub Actions" || echo "No changes to commit"
