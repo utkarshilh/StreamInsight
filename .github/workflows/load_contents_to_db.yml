@@ -1,0 +1,32 @@
+name: Load Final Contents to Database
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"   # Runs every hour. Adjust if needed.
+
+jobs:
+  load_contents:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          pip install psycopg2-binary
+
+      - name: Run loader script
+        env:
+          DB_HOST: ${{ secrets.CREDENTIALS_DB_HOST }}
+          DB_PORT: ${{ secrets.CREDENTIALS_DB_PORT }}
+          DB_NAME: ${{ secrets.CREDENTIALS_DB_NAME }}
+          DB_USER: ${{ secrets.CREDENTIALS_DB_USER }}
+          DB_PASS: ${{ secrets.CREDENTIALS_DB_PASS }}
+        run: python load_contents_to_db.py
