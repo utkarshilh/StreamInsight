@@ -46,3 +46,24 @@ def main():
             row.get("name"),
             row.get("type"),
             row.get("seasons"),
+            row.get("runtime"),
+            row.get("episodes"),
+            row.get("platform")
+        )
+
+        curr.execute(insert_sql, data)
+        inserted += 1
+
+    conn.commit()
+    curr.close()
+    conn.close()
+
+    print(f"Data insertion completed. Total inserted: {inserted}")
+
+    # Clear CSV after successful insertion
+    open(CSV_FILE, "w").close()
+    print("CSV cleared.")
+
+
+if __name__ == "__main__":
+    main()
