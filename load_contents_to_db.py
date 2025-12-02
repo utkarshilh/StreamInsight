@@ -24,12 +24,14 @@ def main():
         return
 
     conn = psycopg2.connect(
-        host=DB_HOST,
-        port=DB_PORT,
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASS
+    host=DB_HOST,
+    port=DB_PORT,
+    dbname=DB_NAME,
+    user=DB_USER,
+    password=DB_PASS,
+    sslmode="require"
     )
+
 
     curr = conn.cursor()
 
