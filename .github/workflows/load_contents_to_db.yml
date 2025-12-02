@@ -24,9 +24,10 @@ jobs:
 
       - name: Run loader script
         env:
-          DB_HOST: ${{ secrets.CREDENTIALS_DB_HOST }}
-          DB_PORT: ${{ secrets.CREDENTIALS_DB_PORT }}
-          DB_NAME: ${{ secrets.CREDENTIALS_DB_NAME }}
-          DB_USER: ${{ secrets.CREDENTIALS_DB_USER }}
-          DB_PASS: ${{ secrets.CREDENTIALS_DB_PASS }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          
         run: python load_contents_to_db.py
